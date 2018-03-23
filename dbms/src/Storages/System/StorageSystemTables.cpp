@@ -200,7 +200,7 @@ BlockInputStreams StorageSystemTables::read(
 
             if (has_create_table_query || has_engine_full)
             {
-                ASTPtr ast = database->tryGetCreateTableQuery(context, table_name);
+                ASTPtr ast = database->getCreateTableQuery(context, table_name);
 
                 if (has_create_table_query)
                     res_columns[j++]->insert(ast ? queryToString(ast) : "");

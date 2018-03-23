@@ -182,11 +182,6 @@ ASTPtr DatabaseDictionary::getCreateTableQuery(
     return parseQuery(parser, query.data(), query.data() + query.size(), "");
 }
 
-ASTPtr DatabaseDictionary::tryGetCreateTableQuery(const Context & context, const String & table_name) const
-{
-    return getCreateTableQuery(context, table_name);
-}
-
 ASTPtr DatabaseDictionary::getCreateDatabaseQuery(const Context & /*context*/) const
 {
     String query;

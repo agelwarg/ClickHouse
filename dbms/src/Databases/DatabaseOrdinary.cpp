@@ -428,8 +428,7 @@ time_t DatabaseOrdinary::getTableMetadataModificationTime(
     }
 }
 
-
-ASTPtr DatabaseOrdinary::getCreateTableQueryImpl(const Context & context, const String & table_name, bool try_get) const
+ASTPtr DatabaseOrdinary::getCreateTableQuery(const Context & context, const String & table_name) const
 {
     ASTPtr ast;
 
@@ -438,29 +437,14 @@ ASTPtr DatabaseOrdinary::getCreateTableQueryImpl(const Context & context, const 
     if (!ast)
     {
         /// Handle system.* tables for which there are no table.sql files.
-        bool has_table = tryGetTable(context, table_name) != nullptr;
-
-        if (has_table && try_get)
+        if (tryGetTable(context, table_name))
             return nullptr;
 
-        auto msg = has_table
-                   ? "There is no CREATE TABLE query for table "
-                   : "There is no metadata file for table ";
-
-        throw Exception(msg + table_name, ErrorCodes::CANNOT_GET_CREATE_TABLE_QUERY);
+        throw Exception("There is no CREATE TABLE query for table " + table_name,
+                        ErrorCodes::CANNOT_GET_CREATE_TABLE_QUERY);
     }
 
     return ast;
-}
-
-ASTPtr DatabaseOrdinary::getCreateTableQuery(const Context & context, const String & table_name) const
-{
-    return getCreateTableQueryImpl(context, table_name, false);
-}
-
-ASTPtr DatabaseOrdinary::tryGetCreateTableQuery(const Context & context, const String & table_name) const
-{
-    return getCreateTableQueryImpl(context, table_name, true);
 }
 
 ASTPtr DatabaseOrdinary::getCreateDatabaseQuery(const Context & /*context*/) const

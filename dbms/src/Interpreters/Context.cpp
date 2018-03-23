@@ -82,6 +82,7 @@ namespace ErrorCodes
     extern const int TABLE_SIZE_EXCEEDS_MAX_DROP_SIZE_LIMIT;
     extern const int SESSION_NOT_FOUND;
     extern const int SESSION_IS_LOCKED;
+    extern const int CANNOT_GET_CREATE_TABLE_QUERY;
 }
 
 
@@ -917,7 +918,12 @@ ASTPtr Context::getCreateTableQuery(const String & database_name, const String &
     String db = resolveDatabase(database_name, current_database);
     assertDatabaseExists(db);
 
-    return shared->databases[db]->getCreateTableQuery(*this, table_name);
+    auto create_query = shared->databases[db]->getCreateTableQuery(*this, table_name);
+
+    if (!create_query)
+        throw Exception("There is no metadata file for table " + table_name, ErrorCodes::CANNOT_GET_CREATE_TABLE_QUERY);
+
+    return create_query;
 }
 
 ASTPtr Context::getCreateExternalTableQuery(const String & table_name) const

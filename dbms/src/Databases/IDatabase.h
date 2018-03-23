@@ -125,12 +125,8 @@ public:
         const String & name) = 0;
 
     /// Get the CREATE TABLE query for the table. It can also provide information for detached tables for which there is metadata.
+    /// Returns nullptr for existing table without metadata.
     virtual ASTPtr getCreateTableQuery(
-        const Context & context,
-        const String & name) const = 0;
-
-    /// Like getCreateTableQuery, but don't throw for existing tables without metadata.
-    virtual ASTPtr tryGetCreateTableQuery(
         const Context & context,
         const String & name) const = 0;
 
