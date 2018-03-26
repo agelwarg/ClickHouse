@@ -500,7 +500,7 @@ void readBackQuotedStringWithSQLStyle(String & s, ReadBuffer & buf)
 
 
 template <typename Vector>
-void readCSVStringInto(Vector & s, ReadBuffer & buf, const char delimiter)
+void readCSVStringInto(Vector & s, ReadBuffer & buf, const char delimiter, bool rfc_compliant)
 {
     if (buf.eof())
         throwReadAfterEOF();
@@ -511,7 +511,8 @@ void readCSVStringInto(Vector & s, ReadBuffer & buf, const char delimiter)
     if (maybe_quote == delimiter)
         return;
 
-    if (maybe_quote == '\'' || maybe_quote == '"')
+    //if (maybe_quote == '\'' || maybe_quote == '"')
+    if ((maybe_quote == '"' && rfc_compliant) || (!rfc_compliant && (maybe_quote == '\'' || maybe_quote == '"')))
     {
         ++buf.position();
 
@@ -575,13 +576,13 @@ void readCSVStringInto(Vector & s, ReadBuffer & buf, const char delimiter)
     }
 }
 
-void readCSVString(String & s, ReadBuffer & buf, const char delimiter)
+void readCSVString(String & s, ReadBuffer & buf, const char delimiter, bool rfc_compliant)
 {
     s.clear();
-    readCSVStringInto(s, buf, delimiter);
+    readCSVStringInto(s, buf, delimiter, rfc_compliant);
 }
 
-template void readCSVStringInto<PaddedPODArray<UInt8>>(PaddedPODArray<UInt8> & s, ReadBuffer & buf, const char delimiter);
+template void readCSVStringInto<PaddedPODArray<UInt8>>(PaddedPODArray<UInt8> & s, ReadBuffer & buf, const char delimiter, bool rfc_compliant);
 
 
 template <typename Vector, typename ReturnType>

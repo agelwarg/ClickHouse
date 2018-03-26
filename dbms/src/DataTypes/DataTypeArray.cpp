@@ -411,10 +411,10 @@ void DataTypeArray::serializeTextCSV(const IColumn & column, size_t row_num, Wri
 }
 
 
-void DataTypeArray::deserializeTextCSV(IColumn & column, ReadBuffer & istr, const char delimiter) const
+void DataTypeArray::deserializeTextCSV(IColumn & column, ReadBuffer & istr, const char delimiter, bool rfc_compliant) const
 {
     String s;
-    readCSV(s, istr, delimiter);
+    readCSV(s, istr, delimiter, rfc_compliant);
     ReadBufferFromString rb(s);
     deserializeText(column, rb);
 }

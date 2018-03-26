@@ -61,7 +61,7 @@ public:
     void serializeTextXML(const IColumn & column, size_t row_num, WriteBuffer & ostr) const override;
 
     void serializeTextCSV(const IColumn & column, size_t row_num, WriteBuffer & ostr) const override;
-    void deserializeTextCSV(IColumn & column, ReadBuffer & istr, const char delimiter) const override;
+    void deserializeTextCSV(IColumn & column, ReadBuffer & istr, const char delimiter, bool rfc_compliant) const override;
 
     MutableColumnPtr createColumn() const override;
 

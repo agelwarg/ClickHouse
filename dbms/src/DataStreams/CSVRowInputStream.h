@@ -18,7 +18,7 @@ public:
     /** with_names - in the first line the header with column names
       * with_types - on the next line header with type names
       */
-    CSVRowInputStream(ReadBuffer & istr_, const Block & header_, const char delimiter_, bool with_names_ = false, bool with_types_ = false);
+    CSVRowInputStream(ReadBuffer & istr_, const Block & header_, const char delimiter_, bool with_names_ = false, bool with_types_ = false, bool rfc_compliant_ = false);
 
     bool read(MutableColumns & columns) override;
     void readPrefix() override;
@@ -33,6 +33,7 @@ private:
     const char delimiter;
     bool with_names;
     bool with_types;
+    bool rfc_compliant;
     DataTypes data_types;
 
     /// For convenient diagnostics in case of an error.

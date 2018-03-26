@@ -180,7 +180,7 @@ public:
     /** delimiter - the delimiter we expect when reading a string value that is not double-quoted
       * (the delimiter is not consumed).
       */
-    virtual void deserializeTextCSV(IColumn & column, ReadBuffer & istr, const char delimiter) const = 0;
+    virtual void deserializeTextCSV(IColumn & column, ReadBuffer & istr, const char delimiter, bool rfc_compliant) const = 0;
 
     /** Text serialization for displaying on a terminal or saving into a text file, and the like.
       * Without escaping or quoting.

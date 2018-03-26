@@ -25,7 +25,7 @@ public:
     void serializeTextJSON(const IColumn & column, size_t row_num, WriteBuffer & ostr, const FormatSettingsJSON & settings) const override;
     void deserializeTextJSON(IColumn & column, ReadBuffer & istr) const override;
     void serializeTextCSV(const IColumn & column, size_t row_num, WriteBuffer & ostr) const override;
-    void deserializeTextCSV(IColumn & column, ReadBuffer & istr, const char delimiter) const override;
+    void deserializeTextCSV(IColumn & column, ReadBuffer & istr, const char delimiter, bool rfc_compliant) const override;
     Field getDefault() const override;
 
     /** Format is platform-dependent. */

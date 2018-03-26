@@ -15,8 +15,8 @@ namespace ErrorCodes
 }
 
 
-CSVRowInputStream::CSVRowInputStream(ReadBuffer & istr_, const Block & header_, const char delimiter_, bool with_names_, bool with_types_)
-    : istr(istr_), header(header_), delimiter(delimiter_), with_names(with_names_), with_types(with_types_)
+CSVRowInputStream::CSVRowInputStream(ReadBuffer & istr_, const Block & header_, const char delimiter_, bool with_names_, bool with_types_, bool rfc_compliant_)
+    : istr(istr_), header(header_), delimiter(delimiter_), with_names(with_names_), with_types(with_types_), rfc_compliant(rfc_compliant_)
 {
     size_t num_columns = header.columns();
     data_types.resize(num_columns);
@@ -124,7 +124,7 @@ bool CSVRowInputStream::read(MutableColumns & columns)
     for (size_t i = 0; i < size; ++i)
     {
         skipWhitespacesAndTabs(istr);
-        data_types[i]->deserializeTextCSV(*columns[i], istr, delimiter);
+        data_types[i]->deserializeTextCSV(*columns[i], istr, delimiter, rfc_compliant);
         skipWhitespacesAndTabs(istr);
 
         skipDelimiter(istr, delimiter, i + 1 == size);
@@ -214,7 +214,7 @@ bool CSVRowInputStream::parseRowAndPrintDiagnosticInfo(MutableColumns & columns,
         {
             skipWhitespacesAndTabs(istr);
             prev_position = istr.position();
-            data_types[i]->deserializeTextCSV(*columns[i], istr, delimiter);
+            data_types[i]->deserializeTextCSV(*columns[i], istr, delimiter, rfc_compliant);
             curr_position = istr.position();
             skipWhitespacesAndTabs(istr);
         }

@@ -236,10 +236,10 @@ void DataTypeAggregateFunction::serializeTextCSV(const IColumn & column, size_t 
 }
 
 
-void DataTypeAggregateFunction::deserializeTextCSV(IColumn & column, ReadBuffer & istr, const char delimiter) const
+void DataTypeAggregateFunction::deserializeTextCSV(IColumn & column, ReadBuffer & istr, const char delimiter, bool rfc_compliant) const
 {
     String s;
-    readCSV(s, istr, delimiter);
+    readCSV(s, istr, delimiter, rfc_compliant);
     deserializeFromString(function, column, s);
 }
 

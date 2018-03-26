@@ -231,11 +231,11 @@ void DataTypeNullable::serializeTextCSV(const IColumn & column, size_t row_num, 
         nested_data_type->serializeTextCSV(col.getNestedColumn(), row_num, ostr);
 }
 
-void DataTypeNullable::deserializeTextCSV(IColumn & column, ReadBuffer & istr, const char delimiter) const
+void DataTypeNullable::deserializeTextCSV(IColumn & column, ReadBuffer & istr, const char delimiter, bool rfc_compliant) const
 {
     safeDeserialize(column,
         [&istr] { return checkStringByFirstCharacterAndAssertTheRest("\\N", istr); },
-        [this, delimiter, &istr] (IColumn & nested) { nested_data_type->deserializeTextCSV(nested, istr, delimiter); } );
+        [this, delimiter, rfc_compliant, &istr] (IColumn & nested) { nested_data_type->deserializeTextCSV(nested, istr, delimiter, rfc_compliant); } );
 }
 
 void DataTypeNullable::serializeText(const IColumn & column, size_t row_num, WriteBuffer & ostr) const

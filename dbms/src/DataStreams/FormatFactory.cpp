@@ -89,6 +89,14 @@ BlockInputStreamPtr FormatFactory::getInput(const String & name, ReadBuffer & bu
     {
         return wrap_row_stream(std::make_shared<CSVRowInputStream>(buf, sample, ',', true));
     }
+    else if (name == "RFC4180")
+    {
+        return wrap_row_stream(std::make_shared<CSVRowInputStream>(buf, sample, ',', false, false, true));
+    }
+    else if (name == "RFC4180WithNames")
+    {
+        return wrap_row_stream(std::make_shared<CSVRowInputStream>(buf, sample, ',', true, false, true));
+    }
     else if (name == "TSKV")
     {
         return wrap_row_stream(std::make_shared<TSKVRowInputStream>(buf, sample, settings.input_format_skip_unknown_fields));

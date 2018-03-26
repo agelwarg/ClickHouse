@@ -167,7 +167,7 @@ void DataTypeNumberBase<T>::serializeTextCSV(const IColumn & column, size_t row_
 }
 
 template <typename T>
-void DataTypeNumberBase<T>::deserializeTextCSV(IColumn & column, ReadBuffer & istr, const char /*delimiter*/) const
+void DataTypeNumberBase<T>::deserializeTextCSV(IColumn & column, ReadBuffer & istr, const char /*delimiter*/, bool /*rfc_compliant*/) const
 {
     FieldType x;
     readCSV(x, istr);

@@ -100,7 +100,7 @@ void DataTypeDateTime::serializeTextCSV(const IColumn & column, size_t row_num, 
     writeChar('"', ostr);
 }
 
-void DataTypeDateTime::deserializeTextCSV(IColumn & column, ReadBuffer & istr, const char /*delimiter*/) const
+void DataTypeDateTime::deserializeTextCSV(IColumn & column, ReadBuffer & istr, const char /*delimiter*/, bool /*rfc_compliant*/) const
 {
     time_t x;
     readDateTimeCSV(x, istr, time_zone);

@@ -395,7 +395,7 @@ void readStringUntilEOF(String & s, ReadBuffer & buf);
   * - if string is in quotes, then it will be read until closing quote,
   *   but sequences of two consecutive quotes are parsed as single quote inside string;
   */
-void readCSVString(String & s, ReadBuffer & buf, const char delimiter = ',');
+void readCSVString(String & s, ReadBuffer & buf, const char delimiter = ',', bool rfc_compliant = false);
 
 
 /// Read and append result to array of characters.
@@ -418,7 +418,7 @@ template <typename Vector>
 void readStringUntilEOFInto(Vector & s, ReadBuffer & buf);
 
 template <typename Vector>
-void readCSVStringInto(Vector & s, ReadBuffer & buf, const char delimiter = ',');
+void readCSVStringInto(Vector & s, ReadBuffer & buf, const char delimiter = ',', bool rfc_compliant = false);
 
 /// ReturnType is either bool or void. If bool, the function will return false instead of throwing an exception.
 template <typename Vector, typename ReturnType = void>
@@ -692,7 +692,7 @@ template <typename T>
 inline std::enable_if_t<std::is_arithmetic_v<T>, void>
 readCSV(T & x, ReadBuffer & buf) { readCSVSimple(x, buf); }
 
-inline void readCSV(String & x, ReadBuffer & buf, const char delimiter = ',') { readCSVString(x, buf, delimiter); }
+inline void readCSV(String & x, ReadBuffer & buf, const char delimiter = ',', bool rfc_compliant = false) { readCSVString(x, buf, delimiter, rfc_compliant); }
 inline void readCSV(LocalDate & x, ReadBuffer & buf) { readCSVSimple(x, buf); }
 inline void readCSV(LocalDateTime & x, ReadBuffer & buf) { readCSVSimple(x, buf); }
 inline void readCSV(UUID & x, ReadBuffer & buf) { readCSVSimple(x, buf); }

@@ -190,10 +190,10 @@ void DataTypeEnum<Type>::serializeTextCSV(const IColumn & column, size_t row_num
 }
 
 template <typename Type>
-void DataTypeEnum<Type>::deserializeTextCSV(IColumn & column, ReadBuffer & istr, const char delimiter) const
+void DataTypeEnum<Type>::deserializeTextCSV(IColumn & column, ReadBuffer & istr, const char delimiter, bool rfc_compliant) const
 {
     std::string name;
-    readCSVString(name, istr, delimiter);
+    readCSVString(name, istr, delimiter, rfc_compliant);
     static_cast<ColumnType &>(column).getData().push_back(getValue(StringRef(name)));
 }
 

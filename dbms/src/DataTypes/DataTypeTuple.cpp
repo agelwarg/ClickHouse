@@ -264,7 +264,7 @@ void DataTypeTuple::serializeTextCSV(const IColumn & column, size_t row_num, Wri
     }
 }
 
-void DataTypeTuple::deserializeTextCSV(IColumn & column, ReadBuffer & istr, const char delimiter) const
+void DataTypeTuple::deserializeTextCSV(IColumn & column, ReadBuffer & istr, const char delimiter, bool rfc_compliant) const
 {
     addElementSafe(elems, column, [&]
     {
@@ -277,7 +277,7 @@ void DataTypeTuple::deserializeTextCSV(IColumn & column, ReadBuffer & istr, cons
                 assertChar(delimiter, istr);
                 skipWhitespaceIfAny(istr);
             }
-            elems[i]->deserializeTextCSV(extractElementColumn(column, i), istr, delimiter);
+            elems[i]->deserializeTextCSV(extractElementColumn(column, i), istr, delimiter, rfc_compliant);
         }
     });
 }
