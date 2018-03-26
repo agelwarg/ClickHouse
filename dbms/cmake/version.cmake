@@ -1,6 +1,6 @@
 # This strings autochanged from release_lib.sh:
-set(VERSION_DESCRIBE v1.1.54370.galileo-testing)
-set(VERSION_REVISION 54370.galileo)
+set(VERSION_DESCRIBE v1.1.54370.galileo.1-testing)
+set(VERSION_REVISION 54370.galileo.1)
 # end of autochange
 
 set (VERSION_MAJOR 1)
