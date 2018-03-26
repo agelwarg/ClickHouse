@@ -1,12 +1,12 @@
 # This strings autochanged from release_lib.sh:
-set(VERSION_DESCRIBE v1.1.54370.galileo.1-testing)
-set(VERSION_REVISION 54370.galileo.1)
+set(VERSION_DESCRIBE v1.1.54370-testing)
+set(VERSION_REVISION 54370)
 # end of autochange
 
 set (VERSION_MAJOR 1)
 set (VERSION_MINOR 1)
 set (VERSION_PATCH ${VERSION_REVISION})
-set (VERSION_EXTRA "")
+set (VERSION_EXTRA "galileo.1")
 set (VERSION_TWEAK "")
 
 set (VERSION_STRING "${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}")
